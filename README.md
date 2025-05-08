@@ -1,6 +1,6 @@
 # Quadratic-Programming-via-Alternating-Direction-Method-of-Multipliers
 
-This repository contains the implementaion of **Alorithm 1** form the paper ["OSQP: An Operator Splitting Solver for Quadratic Programs"](https://arxiv.org/pdf/1711.08013) as a controller for a dynamic system using Quadratic Programming (QP) technigues. The []project](https://github.com/ChouliarasVasileios/Quadratic-Programming-via-Alternating-Direction-Method-of-Multipliers/blob/main/ECEUoP_RS_2_HW_1.pdf) was developed as part of **Robotics System II course**, supervised by **Assistant Professor Konstantinos Chatzilygeroudis.**
+This repository contains the implementaion of **Alorithm 1** form the paper ["OSQP: An Operator Splitting Solver for Quadratic Programs"](https://arxiv.org/pdf/1711.08013) as a controller for a dynamic system using Quadratic Programming (QP) technigues. The [project](https://github.com/ChouliarasVasileios/Quadratic-Programming-via-Alternating-Direction-Method-of-Multipliers/blob/main/ECEUoP_RS_2_HW_1.pdf) was developed as part of **Robotics System II course**, supervised by **Assistant Professor Konstantinos Chatzilygeroudis.**
 
 # Project Overview
 The aim of this assignment was to:
