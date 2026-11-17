@@ -181,10 +181,11 @@ class QP_ADMM_LC:
             
             xk_1 = self.alpha * xk_1 + ( 1 - self.alpha ) * xk
             
-            zk_1 = self.alpha * zk_1 + ( 1 - self.alpha ) * zk + ( yk / self.rho )
+            zk_tilde = zk_1 # keep z~k+1 (before projection), it is needed for the y update
+            zk_1 = self.alpha * zk_tilde + ( 1 - self.alpha ) * zk + ( yk / self.rho )
             zk_1 = self._euclidean_projection(zk_1)
             
-            yk_1 = yk + self.rho * ( self.alpha * zk_1 + ( 1 - self.alpha ) * zk - zk_1 )
+            yk_1 = yk + self.rho * ( self.alpha * zk_tilde + ( 1 - self.alpha ) * zk - zk_1 )
             
             
             
@@ -212,7 +213,7 @@ class QP_ADMM_LC:
             e_prim = e_abs + e_rel * max(np.linalg.norm(self.A,ord = np.inf), np.linalg.norm(zk,ord = np.inf))
             e_dual = e_abs + e_rel * max(np.linalg.norm(self.P @ xk, ord = np.inf), np.linalg.norm(self.A.T @ yk, ord = np.inf), np.linalg.norm(self.q,ord = np.inf))
 
-            if np.linalg.norm(r_prim, ord = np.inf) <= e_prim or np.linalg.norm(r_dual, ord = np.inf) <= e_dual:
+            if np.linalg.norm(r_prim, ord = np.inf) <= e_prim and np.linalg.norm(r_dual, ord = np.inf) <= e_dual:
                 print("Solution Found !")
                 # print(f"xk:\n{xk}\n\nyk:\n{yk}\n\nzk:\n{zk}\n\nvk+1:\n{vk_1}\n\niterations:\n{it}\n\n")
                 return [xk,yk,zk,vk_1,it]
@@ -320,11 +321,11 @@ def main() -> int:
     # Solving the same problem using Proxsuite to test QP-ADMM
     print("Now Solving with Proxsuite below")
     qp = proxsuite.proxqp.dense.QP(2,2,0)
-    qp.init(P,q,A,z_init,None,None,None)
+    qp.init(P.astype(float),q.flatten().astype(float),A.astype(float),z_init.flatten().astype(float),None,None,None)
     
     x_init_prox = np.copy(x_init)
     
-    qp.solve(x_init_prox,None,None)
+    qp.solve(x_init_prox.flatten().astype(float),None,None)
     x_prox = qp.results.x
     x_prox = np.copy(x_prox.reshape(2,1))
     

@@ -93,7 +93,7 @@ def main():
     b = np.array([[0,-m*g]]).T
     
     qp = proxsuite.proxqp.dense.QP(4,2,0)
-    qp.init(Q,q1,A,b,None,None,None)
+    qp.init(Q,q1.flatten().astype(float),A,b.flatten().astype(float),None,None,None)
     
     
     # TODO COMMENT OUT TO TEST
@@ -176,7 +176,7 @@ def main():
         # ###########################        
         # TODO COMMENT OUT TO TEST QP - Proxsuite
         z = np.array([[0.,0.,0.,0.]]).T
-        qp.solve(z,None,None)
+        qp.solve(z.flatten(),None,None)
         z = qp.results.x
         z = np.copy(z.reshape(4,1))
         
@@ -200,7 +200,7 @@ def main():
         
         # updating the QP Matrixes
         q1,A = update_QP_Matrixes(Mass_Matrix,x_state,x_ddot - xd_ddot ,x_ddot - yd_ddot)
-        qp.update(Q,q1,A,b,None,None,None)
+        qp.update(Q,q1.flatten(),A,b.flatten().astype(float),None,None,None)
         
         # Updating the visualization
         visual.update(x,y)
